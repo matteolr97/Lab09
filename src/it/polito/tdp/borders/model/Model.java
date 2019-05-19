@@ -15,7 +15,7 @@ import it.polito.tdp.borders.db.BordersDAO;
 
 public class Model {
 
-	private List<Country> listCountries;
+	private List<Country>   listCountries;
 	private List<Border> borders;
 	
 	private Graph<Country, DefaultEdge> grafo;
