@@ -5,7 +5,7 @@
 package it.polito.tdp.borders;
 
 import java.net.URL;
-
+import java.util.List;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.borders.model.Country;
@@ -53,7 +53,30 @@ public class BordersController {
 	  @FXML
 	    void doTrovaVicini(ActionEvent event) {
 
-	    }
+		  txtResult.clear();
+
+		  Country c = cmbBox.getValue();
+		  if (c == null) {
+				txtResult.setText("Select a country first.");
+			}
+
+			try {
+				List<Country> reachableCountries = model.getStatiConfinanti(c);
+				for (Country country : reachableCountries) {
+					txtResult.appendText(String.format("%s\n", country));
+				}
+			} catch (RuntimeException e) {
+				// If the countries are inserted in the ComboBox when the graph is created,
+				// this should never happen.
+				txtResult.setText("Selected country is not in the graph. They are islands");
+			}
+
+		}
+			
+			
+		  
+		  //txtResult.appendText(model.getStatiConfinanti(c).toString());
+	    
 
 	@FXML // This method is called by the FXMLLoader when initialization is complete
 	void initialize() {

@@ -51,7 +51,7 @@ public class Country {
 	}
 	@Override
 	public String toString() {
-		return String.format("Country [code=%s, stateAbb=%s, stateName=%s]\n", code, stateAbb, stateName);
+		return stateName+"\n";
 	}
 	
 	

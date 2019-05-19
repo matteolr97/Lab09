@@ -10,6 +10,7 @@ import org.jgrapht.Graphs;
 import org.jgrapht.alg.ConnectivityInspector;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
+import org.jgrapht.traverse.DepthFirstIterator;
 
 import it.polito.tdp.borders.db.BordersDAO;
 
@@ -54,7 +55,7 @@ public class Model {
 		
 	}
 	public List<Country> getCountries() {
-		return listCountries;
+		return dao.loadAllCountries();
 	}
 	
 	public List<String> getListaStatiConGrado() {
@@ -77,4 +78,15 @@ public class Model {
 		return s;
 	}
 	
+	public List<Country> getStatiConfinanti(Country first){
+		
+		List<Country> tmp = new LinkedList<Country>();
+		DepthFirstIterator<Country, DefaultEdge> iteratore = new DepthFirstIterator<Country, DefaultEdge>(grafo, first);
+		
+		while(iteratore.hasNext())
+			tmp.add(iteratore.next());
+		
+		
+		return tmp;
+	}
 }
