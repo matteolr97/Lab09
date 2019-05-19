@@ -5,11 +5,15 @@
 package it.polito.tdp.borders;
 
 import java.net.URL;
+
 import java.util.ResourceBundle;
 
+import it.polito.tdp.borders.model.Country;
 import it.polito.tdp.borders.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
@@ -28,16 +32,39 @@ public class BordersController {
 
 	@FXML // fx:id="txtResult"
 	private TextArea txtResult; // Value injected by FXMLLoader
+	@FXML
+	private ComboBox<Country> cmbBox;
+
+	    @FXML
+	    private Button btnTrovaVicini;
 
 	@FXML
 	void doCalcolaConfini(ActionEvent event) {
+		String annoInserito = txtAnno.getText();
+		int anno = Integer.parseInt(annoInserito);
+		txtResult.appendText(model.createGraph(anno).toString());
+	  	txtResult.appendText("\n");
+	  	txtResult.appendText(model.getListaStatiConGrado().toString());
+	  	txtResult.appendText("\n");
+	  	txtResult.appendText(String.format("Numero componenti connessi:%d\n" , model.getNumberOfConnectedComponents()));
+	  	txtResult.appendText(model.getNumeroStatieArchi());
 
-		txtResult.setText("Todo!");
-	}
+}
+	  @FXML
+	    void doTrovaVicini(ActionEvent event) {
+
+	    }
 
 	@FXML // This method is called by the FXMLLoader when initialization is complete
 	void initialize() {
 		assert txtAnno != null : "fx:id=\"txtAnno\" was not injected: check your FXML file 'Borders.fxml'.";
+		assert cmbBox != null : "fx:id=\"cmbBox\" was not injected: check your FXML file 'Borders.fxml'.";
+        assert btnTrovaVicini != null : "fx:id=\"btnTrovaVicini\" was not injected: check your FXML file 'Borders.fxml'.";
 		assert txtResult != null : "fx:id=\"txtResult\" was not injected: check your FXML file 'Borders.fxml'.";
 	}
-}
+
+	public void setModel(Model model2) {
+		this.model = model2;
+		cmbBox.getItems().addAll(model.getCountries());
+	
+}}
